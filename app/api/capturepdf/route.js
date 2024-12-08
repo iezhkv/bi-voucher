@@ -1,16 +1,18 @@
 import puppeteer from 'puppeteer';
 import { NextResponse } from 'next/server';
 
-export async function GET(req) {
+export async function POST(req) {
   try {
-    // Extract query parameters from the request URL
-    const urlParams = new URLSearchParams(req.url.split('?')[1]);
-    const name = urlParams.get('name') || 'Nadezhda Dimitrova Pandelieva';
-    const price = urlParams.get('price') || '200';
-    const wish = urlParams.get('wish') || 'Lorem Ipsum';
+    // Parse JSON data from the request body
+    const { name, price, wish } = await req.json();
+
+    // Use default values if not provided
+    const userName = name || 'Nadezhda Dimitrova Pandelieva';
+    const userPrice = price || '200';
+    const userWish = wish || 'Lorem Ipsum';
 
     // Construct the target URL with query parameters for the /Voucher route
-    const targetUrl = `http://localhost:3000/Voucher?name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}&wish=${encodeURIComponent(wish)}`;
+    const targetUrl = `http://localhost:3000/Voucher?name=${encodeURIComponent(userName)}&price=${encodeURIComponent(userPrice)}&wish=${encodeURIComponent(userWish)}`;
 
     // Launch Puppeteer browser
     const browser = await puppeteer.launch({

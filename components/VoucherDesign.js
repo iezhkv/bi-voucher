@@ -3,9 +3,11 @@
 import Image from "next/image";
 
 
-export default function VoucherDesign({ name, price, wish }) {
+export default function VoucherDesign({ data }) {
 
-    let currency = "BGN"
+  const { name, price, wish } = data;
+
+  let currency = "BGN"
   return (
     <div className="russo-one-regular"
       style={{

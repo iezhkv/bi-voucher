@@ -44,11 +44,8 @@ export default function Home() {
       <FormComponent onInputChange={handleInputChange} formData={formData} />
 
       <div id="capture">
-        <VoucherDesign
-          name={formData.name}
-          price={formData.price}
-          wish={formData.wish}
-        />
+        {/* Pass formData to VoucherDesign */}
+        <VoucherDesign data={formData} />
       </div>
 
       {/* Button to trigger API URL navigation */}

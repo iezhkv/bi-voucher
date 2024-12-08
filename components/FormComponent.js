@@ -1,0 +1,111 @@
+"use client";
+
+import { useState } from "react";
+import * as z from "zod";
+
+// Define a validation schema with Zod
+const formSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  price: z
+    .number({ invalid_type_error: "Price must be a number" })
+    .min(100, { message: "Price must be at least 100" })
+    .max(9999, { message: "Price must not exceed 9999" }),
+  wish: z
+    .string()
+    .max(250, { message: "Wish must be 250 characters or fewer" })
+    .min(5, { message: "Wish must be at least 5 characters" }),
+});
+
+export default function FormComponent({ onInputChange, formData }) {
+  const [errors, setErrors] = useState({});
+
+  // Handle input changes and validate the field in real-time
+  const handleInputChange = (field, value) => {
+    // Convert numeric inputs to numbers
+    const processedValue =
+      field === "price" && value ? parseFloat(value) || "" : value;
+
+    onInputChange(field, processedValue);
+
+    try {
+      // Validate only the changed field
+      formSchema.pick({ [field]: true }).parse({ [field]: processedValue });
+      setErrors((prev) => ({ ...prev, [field]: null })); // Clear the error for the field
+    } catch (e) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: e.errors[0]?.message || "Invalid input",
+      }));
+    }
+  };
+
+  return (
+    <form className="p-4 bg-gray-100 rounded shadow space-y-4">
+      <div>
+        <label htmlFor="name" className="block text-gray-700 font-medium">
+          Name
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          value={formData.name}
+          onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+          className={`w-full px-3 py-2 border rounded ${
+            errors.name ? "border-red-500" : "border-gray-300"
+          } focus:outline-none focus:ring focus:border-blue-500`}
+          placeholder="Enter name"
+        />
+        {errors.name && (
+          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="price" className="block text-gray-700 font-medium">
+          Price
+        </label>
+        <input
+          type="number"
+          id="price"
+          name="price"
+          value={formData.price}
+          onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+          min={100}
+          max={9999}
+          className={`w-full px-3 py-2 border rounded ${
+            errors.price ? "border-red-500" : "border-gray-300"
+          } focus:outline-none focus:ring focus:border-blue-500`}
+          placeholder="Enter price (100-9999)"
+        />
+        {errors.price && (
+          <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="wish" className="block text-gray-700 font-medium">
+          Wish
+        </label>
+        <textarea
+          id="wish"
+          name="wish"
+          rows={5}
+          maxLength={250} // Limit input to 250 characters
+          value={formData.wish}
+          onChange={(e) => handleInputChange(e.target.name, e.target.value)}
+          className={`w-full px-3 py-2 border rounded ${
+            errors.wish ? "border-red-500" : "border-gray-300"
+          } focus:outline-none focus:ring focus:border-blue-500`}
+          placeholder="Enter your wish (max 250 characters)"
+        />
+        {errors.wish && (
+          <p className="text-red-500 text-sm mt-1">{errors.wish}</p>
+        )}
+        <p className="text-gray-500 text-sm mt-1">
+          {formData.wish.length}/250 characters used
+        </p>
+      </div>
+    </form>
+  );
+}

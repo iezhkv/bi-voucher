@@ -9,7 +9,7 @@ export default function VoucherDesign({ data }) {
 
   let currency = "BGN"
   return (
-    <div className="russo-one-regular"
+    <div className=""
       style={{
         backgroundColor: "#0c0d34ff", // Light gray background
         width: "100%",
@@ -33,7 +33,7 @@ export default function VoucherDesign({ data }) {
       {/* Dynamic text fields */}
       <div className="name"
         style={{
-          position: "relative",
+          position: "absolute",
           left: "26%",
           top: "43%",
           width: "70%",

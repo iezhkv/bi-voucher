@@ -1,15 +1,9 @@
-import localFont from "next/font/local";
+import { Russo_One } from "next/font/google";
 import "./globals.css";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const russoOne = Russo_One({
+  weight: "400", // or any weight you prefer
+  subsets: ["latin"], // optional, you can add other subsets like "latin-ext"
 });
 
 export const metadata = {
@@ -20,9 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${russoOne.className} antialiased`}>
         {children}
       </body>
     </html>

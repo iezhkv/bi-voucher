@@ -2,14 +2,22 @@
 
 import Image from "next/image";
 import styles from "./styles.module.css";
+import { Russo_One } from "next/font/google";
+
+
+//  Components
 import QRCodeGenerator from "@/components/QRCodeGenerator";
+
+const russoOne = Russo_One({
+    weight: "400", // or any weight you prefer
+    subsets: ["latin"], // optional, you can add other subsets like "latin-ext"
+  });
 
 export default function Design1({ data = {} }) {
   // Destructure data with default values
   const {
     name,
     price,
-    currency = "BGN",
     wish,
     qrValue,
   } = data;
@@ -20,7 +28,8 @@ export default function Design1({ data = {} }) {
   const backImgPath = "/voucherBack.png";
 
   return (
-    <>
+    <div className={`${russoOne.className} antialiased`}>
+
       {/* Voucher Front */}
       <div className={styles.voucher} id="voucher-front">
         <Image
@@ -34,7 +43,7 @@ export default function Design1({ data = {} }) {
 
         <div className={styles.ammount}>
           <div className={styles.price}>{price}</div>
-          <div className={styles.currency}>{currency}</div>
+          <div className={styles.currency}>BGN</div>
         </div>
 
         <div className={styles.wish}>
@@ -55,6 +64,6 @@ export default function Design1({ data = {} }) {
           <QRCodeGenerator value={qrValue} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

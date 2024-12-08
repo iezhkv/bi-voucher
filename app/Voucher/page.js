@@ -13,7 +13,6 @@ export default function VoucherPage() {
   const data = {
     name: searchParams?.get("name") || 'Три Имена На Получателя',
     price: searchParams?.get("price") || 200,
-    currency: searchParams?.get("currency") || "BGN",
     wish: searchParams?.get("wish")|| "Пожелавам Ви много успехи, здраве и щастие. Нека всяко ново начинание Ви води към нови възможности и постижения, а всяка стъпка по пътя да бъде изпълнена с удовлетворение и радост.",
 
   };

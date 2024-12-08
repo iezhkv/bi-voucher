@@ -33,6 +33,20 @@ export async function POST(req) {
       waitUntil: 'networkidle2', // Ensure the page is fully loaded
     });
 
+    // Hide everything except the two divs we want to render
+    await page.evaluate(() => {
+      // Hide the body content except for the two divs
+      const body = document.querySelector('body');
+      if (body) {
+        const elementsToHide = body.children;
+        for (let el of elementsToHide) {
+          if (el.id !== 'capture1' && el.id !== 'capture2') {
+            el.style.display = 'none';
+          }
+        }
+      }
+    });
+
     // Capture the first div with the id 'capture1'
     const element1 = await page.$('#capture1');
     if (!element1) {

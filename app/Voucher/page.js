@@ -3,6 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import VoucherDesign from "@/components/VoucherDesign";
 import GenerateDownloadButton from "@/components/GenerateDownloadButton"; // Import the new component
+import VoucherDesignBack from "@/components/VoucherDesignBack";
 
 export default function VoucherPage() {
   // Use Next.js' useSearchParams hook to extract URL parameters
@@ -25,7 +26,7 @@ export default function VoucherPage() {
       </div>
       <div id="capture2">
         {/* Pass the data object to VoucherDesign */}
-        <VoucherDesign data={data} />
+        <VoucherDesignBack data={data} />
       </div>
 
       {/* Use the separated button component */}

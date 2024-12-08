@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
-import VoucherDesign from "./VoucherDesign";
-import VoucherDesignBack from "./VoucherDesignBack";
+import Design1 from "./Vouchers/Design1/Design1";
 
-// Define a validation schema with Zod
+
+
+// Define a lidation schema with Zod
 const formSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   price: z
@@ -124,7 +125,7 @@ export default function FormComponent() {
           <textarea
             id="wish"
             name="wish"
-            rows={5}
+            rows={7}
             maxLength={250} // Limit input to 250 characters
             value={formData.wish || ""}
             onChange={(e) => handleInputChange(e.target.name, e.target.value)}
@@ -152,10 +153,10 @@ export default function FormComponent() {
         </button>
       </form>
 
-      {/* <div className="mt-10">
-        <VoucherDesign data={formData} />
-        <VoucherDesignBack data={formData} />
-      </div> */}
+      <div className="mt-10">
+        <Design1 data={formData} />
+
+      </div>
 
     </div>
 

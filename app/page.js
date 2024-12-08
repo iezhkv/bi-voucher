@@ -1,4 +1,5 @@
 import FormComponent from "@/components/FormComponent";
+import Design1 from "@/components/Vouchers/Design1/Design1";
 
 export default function Home() {
   return (

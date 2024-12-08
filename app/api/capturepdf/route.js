@@ -6,13 +6,8 @@ export async function POST(req) {
     // Parse JSON data from the request body
     const { name, price, wish } = await req.json();
 
-    // Use default values if not provided
-    const userName = name || 'Nadezhda Dimitrova Pandelieva';
-    const userPrice = price || '200';
-    const userWish = wish || 'Lorem Ipsum';
-
     // Construct the target URL with query parameters for the /Voucher route
-    const targetUrl = `http://localhost:3000/Voucher?name=${encodeURIComponent(userName)}&price=${encodeURIComponent(userPrice)}&wish=${encodeURIComponent(userWish)}`;
+    const targetUrl = `http://localhost:3000/Voucher?name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}&wish=${encodeURIComponent(wish)}`;
 
     // Launch Puppeteer browser
     const browser = await puppeteer.launch({
@@ -40,35 +35,35 @@ export async function POST(req) {
       if (body) {
         const elementsToHide = body.children;
         for (let el of elementsToHide) {
-          if (el.id !== 'capture1' && el.id !== 'capture2') {
+          if (el.id !== 'voucher-front' && el.id !== 'voucher-back') {
             el.style.display = 'none';
           }
         }
       }
     });
 
-    // Capture the first div with the id 'capture1'
-    const element1 = await page.$('#capture1');
+    // Capture the first div with the id 'voucher-front'
+    const element1 = await page.$('#voucher-front');
     if (!element1) {
-      throw new Error('Element with the id #capture1 not found');
+      throw new Error('Element with the id #voucher-front not found');
     }
 
     // Get the bounding box of the first element
     const boundingBox1 = await element1.boundingBox();
     if (!boundingBox1) {
-      throw new Error('Unable to get the bounding box of #capture1');
+      throw new Error('Unable to get the bounding box of #voucher-front');
     }
 
-    // Capture the second div with the id 'capture2'
-    const element2 = await page.$('#capture2');
+    // Capture the second div with the id 'voucher-back'
+    const element2 = await page.$('#voucher-back');
     if (!element2) {
-      throw new Error('Element with the id #capture2 not found');
+      throw new Error('Element with the id #voucher-back not found');
     }
 
     // Get the bounding box of the second element
     const boundingBox2 = await element2.boundingBox();
     if (!boundingBox2) {
-      throw new Error('Unable to get the bounding box of #capture2');
+      throw new Error('Unable to get the bounding box of #voucher-back');
     }
 
     // Generate the PDF with two pages (one for each div)
@@ -81,7 +76,7 @@ export async function POST(req) {
 
     // Add content from the first div as the first page
     await page.evaluate((boundingBox1) => {
-      const element1 = document.querySelector('#capture1');
+      const element1 = document.querySelector('#voucher-front');
       if (element1) {
         element1.style.pageBreakAfter = 'always'; // Ensure a page break after this element
       }
@@ -89,7 +84,7 @@ export async function POST(req) {
 
     // Add content from the second div as the second page
     await page.evaluate((boundingBox2) => {
-      const element2 = document.querySelector('#capture2');
+      const element2 = document.querySelector('#voucher-back');
       if (element2) {
         element2.style.pageBreakBefore = 'always'; // Ensure a page break before this element
       }

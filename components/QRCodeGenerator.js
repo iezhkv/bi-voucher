@@ -13,7 +13,7 @@ export default function QRCodeGenerator({ value, bgColor = "#ffffff", fgColor = 
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: bgColor, // QR code background color
-        borderRadius: "8%", 
+        borderRadius: "6%", 
         padding: "6%", 
       }}
     >

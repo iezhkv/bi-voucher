@@ -6,6 +6,7 @@
     aspect-ratio: 21/9; /* sets the size */
     overflow: hidden;
     font-size: 3vw;
+    color: #0D0D34;
   }
   
   .name {
@@ -89,6 +90,7 @@
     width: 10%;
     aspect-ratio: 1/1;
     margin: 1%;
+    box-shadow: 0px 10px 40px rgb(0, 0, 0); /* Outer shadow */
 
 
   }

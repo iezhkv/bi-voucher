@@ -30,11 +30,30 @@ export async function POST(req) {
       waitUntil: 'networkidle2', // Ensure the page is fully loaded
     });
 
-    // Generate the PDF of the entire page
+    // Ensure both divs exist on the page
+    const frontExists = await page.$('#voucher-front');
+    const backExists = await page.$('#voucher-back');
+    if (!frontExists || !backExists) {
+      throw new Error('One or both required divs (#voucher-front, #voucher-back) are missing');
+    }
+
+    // Add page breaks for the two divs
+    await page.evaluate(() => {
+      const front = document.querySelector('#voucher-front');
+      const back = document.querySelector('#voucher-back');
+      if (front) {
+        front.style.pageBreakAfter = 'always'; // Add a page break after the front
+      }
+      if (back) {
+        back.style.pageBreakBefore = 'always'; // Add a page break before the back
+      }
+    });
+
+    // Generate the PDF with two pages
     const pdf = await page.pdf({
       format: 'A4',
       printBackground: true, // Include background graphics
-      margin: { top: '0px', right: '0px', bottom: '0px', left: '0px' }, // Optional: Adjust margins
+      margin: { top: '0px', right: '0px', bottom: '0px', left: '0px' }, // Remove margins
     });
 
     // Close the browser

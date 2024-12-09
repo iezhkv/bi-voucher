@@ -24,6 +24,7 @@ export default function FormComponent() {
   const [formData, setFormData] = useState({
     name: "Имена на Получател",
     price: 200,
+    qrValue: "test",
     wish: "Пожелавам Ви много успехи, здраве и щастие. Нека всяко ново начинание Ви води към нови възможности и постижения, а всяка стъпка по пътя да бъде изпълнена с удовлетворение и радост.",
   });
   const [errors, setErrors] = useState({});
@@ -74,7 +75,7 @@ export default function FormComponent() {
 
   return (
     <div>
-      <form className="p-4 bg-gray-100 rounded shadow space-y-4 max-w-[500px]" onSubmit={handleSubmit}>
+      <form className="p-4 bg-gray-100 rounded shadow space-y-4" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name" className="block text-gray-700 font-medium">
             Name

@@ -21,7 +21,7 @@ export default function Design1({ voucher = {}, hideBack = false }) {
   const backImgPath = "/voucherBack.png";
 
   return (
-    <div className={`${russoOne.className} antialiased wrapper`}>
+    <div className={`${russoOne.className} antialiased wrapper`} id="voucher-wrapper">
       {/* Voucher Front */}
       <div className={styles.voucher} id="voucher-front">
         <Image

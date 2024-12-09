@@ -1,5 +1,5 @@
-import FormComponent from "@/app/components/FormComponent";
-import Design1 from "@/app/components/Vouchers/Design1/Design1";
+
+import Design1 from "@/app/components/vouchers/Design1/Design1";
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
           Create Your Voucher
         </h1>
         {/* Render the FormComponent */}
-        <FormComponent />
+        {/* <FormComponent /> */}
       </div>
     </div>
   );

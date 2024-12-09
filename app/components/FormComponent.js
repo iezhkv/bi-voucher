@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
-import Design1 from "./Vouchers/Design1/Design1";
+import Design1 from "./vouchers/Design1/Design1";
 
 
 

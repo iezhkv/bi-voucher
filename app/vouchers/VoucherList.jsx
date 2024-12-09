@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Design1 from "../components/Vouchers/Design1/Design1"
+import Design1 from "../components/vouchers/Design1/Design1"
 
 async function getVouchers() {
     const res = await fetch('http://localhost:4000/vouchers',{

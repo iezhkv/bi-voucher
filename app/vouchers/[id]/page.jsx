@@ -27,11 +27,11 @@ export default async function VoucherDetails({ params }) {
     console.log("Voucher data:", voucher);
 
     return (
-        <main>
+        <>
             <nav>
                 <h2>Voucher Details</h2>
             </nav>
             <Design1 voucher={voucher} />
-        </main>
+        </>
     );
 }

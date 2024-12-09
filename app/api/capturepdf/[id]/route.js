@@ -1,13 +1,19 @@
 import puppeteer from 'puppeteer';
 import { NextResponse } from 'next/server';
 
-export async function POST(req) {
-  try {
-    // Parse JSON data from the request body
-    const { name, price, wish } = await req.json();
+
+
+export async function GET(req, { params }) {
+    try {
+      // Extract the `id` from the URL path
+      const { id } = params;
+  
+      if (!id) {
+        throw new Error('Missing `id` parameter in the URL');
+      }
 
     // Construct the target URL with query parameters for the /Voucher route
-    const targetUrl = `http://localhost:3000/vouchers/1`;
+    const targetUrl = `http://localhost:3000/vouchers/${id}`;
 
     // Launch Puppeteer browser
     const browser = await puppeteer.launch({

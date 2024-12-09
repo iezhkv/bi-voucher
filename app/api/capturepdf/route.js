@@ -1,15 +1,17 @@
 import puppeteer from 'puppeteer';
 import { NextResponse } from 'next/server';
 
-
+const nextApiUrl = process.env.NEXT_PUBLIC_NEXT_API_BASE_URL
 export async function POST(req) {
+
+
     try {
       // Parse JSON data from the request body
       const { id } = await req.json();
   
-      // Construct the target URL with query parameters for the /Voucher route
-      const targetUrl = `http://localhost:3000/vouchers/${id}`;
   
+      const targetUrl = `${nextApiUrl}/vouchers/${id}`
+      
       // Launch Puppeteer browser
       const browser = await puppeteer.launch({
         headless: true, // Run in headless mode

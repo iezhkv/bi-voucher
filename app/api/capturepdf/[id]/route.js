@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import { NextResponse } from 'next/server';
 
-
+const nextApiUrl = process.env.NEXT_PUBLIC_NEXT_API_BASE_URL
 
 export async function GET(req, { params }) {
     try {
@@ -13,7 +13,7 @@ export async function GET(req, { params }) {
       }
 
     // Construct the target URL with query parameters for the /Voucher route
-    const targetUrl = `http://localhost:3000/vouchers/${id}`;
+    const targetUrl = `${nextApiUrl}/vouchers/${id}`
 
     // Launch Puppeteer browser
     const browser = await puppeteer.launch({

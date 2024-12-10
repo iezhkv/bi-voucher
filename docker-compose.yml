@@ -8,16 +8,6 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGO_URI=mongodb://db:27017/voucherdb
-    depends_on:
-      - db
-    volumes:
-      - .:/app  # Mount the root directory into the container's /app directory
-  db:
-    image: mongo:6.0
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./db:/data/db  # Persist MongoDB data in the local ./db directory
-volumes:
-  db-data:
+      - MONGO_URI=mongodb+srv://admin:LuCPI17mM2GMhJVF@mern.1izuh.mongodb.net/?retryWrites=true&w=majority&appName=MERN
+
+

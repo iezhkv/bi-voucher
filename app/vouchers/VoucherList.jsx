@@ -6,7 +6,7 @@ export default async function VoucherList() {
     const vouchers = await fetchVouchers(); // Use the server action to fetch vouchers
 
     return (
-        <>
+        <div className="max-w-screen-sm mx-auto">
             {vouchers.map((voucher) => (
                 <div key={voucher.id} className="my-5">
                     <Link href={`/vouchers/${voucher.id}`}>
@@ -15,6 +15,6 @@ export default async function VoucherList() {
                 </div>
             ))}
             {vouchers.length === 0 && <p>No vouchers</p>}
-        </>
+        </div>
     );
 }

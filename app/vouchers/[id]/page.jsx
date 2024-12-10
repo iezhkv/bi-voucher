@@ -1,4 +1,4 @@
-import Design1 from "@/app/components/vouchers/Design1/Design1";
+import Design1 from "@/app/components/vouchers/design1/Design1";
 import DownloadButton from "./DownloadButton";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";

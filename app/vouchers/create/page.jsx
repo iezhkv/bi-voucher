@@ -2,7 +2,7 @@
 
 import { useState, useCallback, Suspense } from "react";
 import CreateForm from "./CreateForm";
-import Design1 from "@/app/components/vouchers/Design1/Design1";
+import Design1 from "@/app/components/vouchers/design1/Design1";
 
 export const dynamic = "force-dynamic";
 

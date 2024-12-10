@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createVoucher, fetchVoucherById, updateVoucher } from "@/app/actions/voucherActions";
+import {
+    createVoucher,
+    fetchVoucherById,
+    updateVoucher,
+} from "@/app/actions/voucherActions";
 
 export default function CreateForm({ onChange }) {
     const router = useRouter();
@@ -31,7 +35,11 @@ export default function CreateForm({ onChange }) {
                         setWish(voucher.wish);
 
                         if (onChange) {
-                            onChange({ name: voucher.name, price: voucher.price, wish: voucher.wish });
+                            onChange({
+                                name: voucher.name,
+                                price: voucher.price,
+                                wish: voucher.wish,
+                            });
                         }
                     } else {
                         console.error("Voucher not found.");
@@ -80,50 +88,61 @@ export default function CreateForm({ onChange }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-[500px] mx-auto">
-            <label className="block">
-                <span className="text-sm font-medium">Name:</span>
-                <input
-                    required
-                    type="text"
-                    className="block w-full border rounded p-2"
-                    onChange={(e) => setName(e.target.value)}
-                    value={name}
-                    placeholder="Enter voucher name"
-                />
-            </label>
-            <label className="block">
-                <span className="text-sm font-medium">Price:</span>
-                <input
-                    required
-                    type="number"
-                    className="block w-full border rounded p-2"
-                    onChange={(e) => setPrice(e.target.value)}
-                    value={price}
-                    min={100}
-                    max={9999}
-                    placeholder="Enter voucher price"
-                />
-            </label>
-            <label className="block">
-                <span className="text-sm font-medium">Wish:</span>
-                <textarea
-                    required
-                    className="block w-full border rounded p-2"
-                    onChange={(e) => setWish(e.target.value)}
-                    value={wish}
-                    rows={5}
-                    maxLength={250}
-                    placeholder="Enter a wish or message"
-                />
-            </label>
-            <button
-                type="submit"
-                className={`${editMode ? "btn-edit" : "btn-primary"} px-4 py-2 rounded bg-blue-600 text-white`}
-                disabled={isLoading}
+        <Suspense fallback={<p>Loading form...</p>}>
+            <form
+                onSubmit={handleSubmit}
+                className="space-y-4 w-full max-w-[500px] mx-auto"
             >
-                {isLoading ? "Processing..." : editMode ? "Update" : "Create"}
-            </button>
-        </form>
+                <label className="block">
+                    <span className="text-sm font-medium">Name:</span>
+                    <input
+                        required
+                        type="text"
+                        className="block w-full border rounded p-2"
+                        onChange={(e) => setName(e.target.value)}
+                        value={name}
+                        placeholder="Enter voucher name"
+                    />
+                </label>
+                <label className="block">
+                    <span className="text-sm font-medium">Price:</span>
+                    <input
+                        required
+                        type="number"
+                        className="block w-full border rounded p-2"
+                        onChange={(e) => setPrice(e.target.value)}
+                        value={price}
+                        min={100}
+                        max={9999}
+                        placeholder="Enter voucher price"
+                    />
+                </label>
+                <label className="block">
+                    <span className="text-sm font-medium">Wish:</span>
+                    <textarea
+                        required
+                        className="block w-full border rounded p-2"
+                        onChange={(e) => setWish(e.target.value)}
+                        value={wish}
+                        rows={5}
+                        maxLength={250}
+                        placeholder="Enter a wish or message"
+                    />
+                </label>
+                <button
+                    type="submit"
+                    className={`${
+                        editMode ? "btn-edit" : "btn-primary"
+                    } px-4 py-2 rounded bg-blue-600 text-white`}
+                    disabled={isLoading}
+                >
+                    {isLoading
+                        ? "Processing..."
+                        : editMode
+                        ? "Update"
+                        : "Create"}
+                </button>
+            </form>
+        </Suspense>
     );
 }

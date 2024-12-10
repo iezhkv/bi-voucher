@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense } from "react";
 import CreateForm from "./CreateForm";
 import Design1 from "@/app/components/vouchers/Design1/Design1";
+
+export const dynamic = "force-dynamic";
 
 export default function Page() {
     const [formData, setFormData] = useState({
@@ -26,10 +28,12 @@ export default function Page() {
                     </p>
                 </div>
             </nav>
-            <CreateForm onChange={handleFormChange} />
-            <div className="mt-5">
-            <Design1 voucher={formData} hideBack />
-            </div>
+            <Suspense fallback={<p>Loading form...</p>}>
+                <CreateForm onChange={handleFormChange} />
+                <div className="mt-5">
+                    <Design1 voucher={formData} hideBack />
+                </div>
+            </Suspense>
         </main>
     );
 }

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-export default function UpdateButton({ id }) {
+export default function EditButton({ id }) {
     const router = useRouter();
 
     const handleUpdateClick = () => {
@@ -12,7 +12,7 @@ export default function UpdateButton({ id }) {
     return (
         <button
             onClick={handleUpdateClick}
-            className="btn-primary"
+            className="btn-edit"
         >
             Edit
         </button>

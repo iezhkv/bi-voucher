@@ -27,7 +27,9 @@ export default function Page() {
                 </div>
             </nav>
             <CreateForm onChange={handleFormChange} />
+            <div className="mt-5">
             <Design1 voucher={formData} hideBack />
+            </div>
         </main>
     );
 }

@@ -28,7 +28,7 @@ export default function DeleteButton({ id }) {
         <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className="btn-delete px-4 py-2 rounded"
+            className="btn-delete"
         >
             {isDeleting ? "Deleting..." : "Delete"}
         </button>

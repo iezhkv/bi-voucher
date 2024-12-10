@@ -43,7 +43,7 @@ main nav {
 button {
   @apply 
     px-3 py-2 
-    rounded-sm 
+    px-4 py-2 rounded
     flex justify-between items-center gap-2
     text-sm;
 }
@@ -51,20 +51,17 @@ button:hover {
   @apply bg-opacity-90;
 }
 .btn-primary {
-  @apply bg-primary text-white;
+  @apply bg-green-600 text-white;
 }
 .btn-secondary {
   @apply bg-gray-200 text-gray-900;
 }
 .btn-delete {
-  @apply 
-    bg-red-600 
-    text-white 
-    hover:bg-red-500 
-    active:bg-red-700 
-    focus:outline-none focus:ring-2 focus:ring-red-400
-    border border-transparent;
+  @apply bg-red-500 text-white 
 }
+.btn-edit {
+    @apply bg-yellow-500 text-white 
+  }
 
 /* form styles */
 form {

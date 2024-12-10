@@ -19,16 +19,10 @@
       "wish": "Искаш ли и ти да правиш такива ваучери ?"
     },
     {
-      "id": "3d24",
-      "name": "asdas",
+      "name": "Грешка ",
       "price": "123",
-      "wish": "asdasdas"
-    },
-    {
-      "id": "6fbc",
-      "name": "asdas",
-      "price": "123",
-      "wish": "asdasdas"
+      "wish": "Пожелание",
+      "id": "5654"
     }
   ]
 }

@@ -1,8 +1,9 @@
 import Design1 from "@/app/components/vouchers/Design1/Design1";
 import DownloadButton from "./DownloadButton";
 import DeleteButton from "./DeleteButton";
-import UpdateButton from "./UpdateButton";
+import EditButton from "./EditButton";
 import { fetchVoucherById } from "@/app/actions/voucherActions";
+
 
 export default async function VoucherDetails({ params }) {
     const id = params.id;
@@ -21,7 +22,7 @@ export default async function VoucherDetails({ params }) {
             <Design1 voucher={voucher} />
             <div className="flex space-x-4 mt-4">
                 <DownloadButton id={id} />
-                <UpdateButton id={id} /> {/* Add UpdateButton */}
+                <EditButton id={id} /> 
                 <DeleteButton id={id} />
             </div>
         </>

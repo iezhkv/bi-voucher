@@ -28,7 +28,6 @@ export async function POST(req) {
             waitUntil: "networkidle2", // Ensure the page is fully loaded
         });
 
-
         // Hide everything except the two divs we want to render
         await page.evaluate(() => {
             // Hide the body content except for the two divs
@@ -43,7 +42,13 @@ export async function POST(req) {
             }
         });
 
-        
+        await page.evaluate(() => {
+            const body = document.querySelector('body');
+            if (body) {
+              body.style.margin = '0'; // Set margin to 0
+            }
+          });
+
         // Capture the first div with the id 'voucher-front'
         const element1 = await page.$("#voucher-front");
         if (!element1) {
@@ -94,8 +99,8 @@ export async function POST(req) {
 
         // Finalize PDF rendering with two separate pages
         const finalPdf = await page.pdf({
-            width: '2480px',
-            height: '3508px',
+            width: "2480px",
+            height: "3508px",
             scale: 1,
             printBackground: false,
             pageRanges: "1,2",

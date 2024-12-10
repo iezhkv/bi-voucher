@@ -4,8 +4,7 @@ FROM node:18-alpine
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json into the container
-COPY . .
+
 
 # Install dependencies
 RUN npm install

@@ -1,5 +1,7 @@
 import { Suspense } from "react"
 
+export const dynamic = "force-dynamic";
+
 // import Loading from "../loading"
 import Link from "next/link"
 import VoucherList from "./VoucherList"

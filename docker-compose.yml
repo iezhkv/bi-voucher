@@ -3,8 +3,8 @@ version: '3.9'
 services:
   app:
     build:
-      context: ./app
-      dockerfile: Dockerfile
+      context: .  # Use the root directory as the context
+      dockerfile: Dockerfile  # Dockerfile is in the root directory
     ports:
       - "3000:3000"
     environment:
@@ -12,12 +12,12 @@ services:
     depends_on:
       - db
     volumes:
-      - ./app:/app
+      - .:/app  # Mount the root directory into the container's /app directory
   db:
     image: mongo:6.0
     ports:
       - "27017:27017"
     volumes:
-      - ./db:/data/db
+      - ./db:/data/db  # Persist MongoDB data in the local ./db directory
 volumes:
   db-data:

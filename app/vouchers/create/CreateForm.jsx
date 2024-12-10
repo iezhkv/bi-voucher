@@ -1,15 +1,49 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { createVoucher } from "@/app/actions/voucherActions";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createVoucher, fetchVoucherById, updateVoucher } from "@/app/actions/voucherActions";
 
 export default function CreateForm({ onChange }) {
     const router = useRouter();
+    const searchParams = useSearchParams();
+
+    // Get `id` from search params
+    const voucherId = searchParams.get("voucherId");
+
+    // Determine if we are in edit mode
+    const editMode = Boolean(voucherId);
+
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [wish, setWish] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    // Fetch voucher details if in edit mode
+    useEffect(() => {
+        const loadVoucher = async () => {
+            if (editMode) {
+                try {
+                    const voucher = await fetchVoucherById(voucherId);
+                    if (voucher) {
+                        setName(voucher.name);
+                        setPrice(voucher.price);
+                        setWish(voucher.wish);
+
+                        if (onChange) {
+                            onChange({ name: voucher.name, price: voucher.price, wish: voucher.wish });
+                        }
+                    } else {
+                        console.error("Voucher not found.");
+                    }
+                } catch (error) {
+                    console.error("Error loading voucher:", error.message);
+                }
+            }
+        };
+
+        loadVoucher();
+    }, [editMode, voucherId, onChange]);
 
     // Pass data to the parent component whenever any form field changes
     useEffect(() => {
@@ -22,29 +56,31 @@ export default function CreateForm({ onChange }) {
         e.preventDefault();
         setIsLoading(true);
 
-        const newVoucher = { name, price, wish };
+        const voucherData = { name, price, wish };
 
         try {
-            // Call the `createVoucher` server action
-            const data = await createVoucher(newVoucher);
-
-            console.log("Voucher successfully created:", data);
-
-            // Navigate to /vouchers/:id
-            if (data.id) {
-                router.push(`/vouchers/${data.id}`);
+            if (editMode) {
+                // Update voucher
+                await updateVoucher(voucherId, voucherData);
+                router.push(`/vouchers/${voucherId}`);
             } else {
-                throw new Error("Response did not include an ID");
+                // Create voucher
+                const data = await createVoucher(voucherData);
+                if (data.id) {
+                    router.push(`/vouchers/${data.id}`);
+                } else {
+                    throw new Error("Response did not include an ID");
+                }
             }
         } catch (error) {
-            console.error("Error creating voucher:", error.message);
+            console.error("Error submitting form:", error.message);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-1/2 space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
             <label className="block">
                 <span className="text-sm font-medium">Name:</span>
                 <input
@@ -83,10 +119,10 @@ export default function CreateForm({ onChange }) {
             </label>
             <button
                 type="submit"
-                className="btn-primary px-4 py-2 rounded bg-blue-600 text-white"
+                className={`btn-primary px-4 py-2 rounded ${editMode ? "bg-yellow-600" : "bg-blue-600"} text-white`}
                 disabled={isLoading}
             >
-                {isLoading ? "Submitting..." : "Submit"}
+                {isLoading ? "Processing..." : editMode ? "Update" : "Create"}
             </button>
         </form>
     );

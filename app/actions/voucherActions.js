@@ -24,6 +24,12 @@ export async function fetchVoucherById(id) {
         headers: { "Content-Type": "application/json" },
     });
 
+    // Handle 404 Not Found gracefully
+    if (response.status === 404) {
+        console.warn(`Voucher with ID ${id} not found.`);
+        return null;
+    }
+
     if (!response.ok) {
         throw new Error(`Failed to fetch voucher with ID ${id}: ${response.statusText}`);
     }
@@ -54,6 +60,11 @@ export async function updateVoucher(id, voucherData) {
         body: JSON.stringify(voucherData),
     });
 
+    if (response.status === 404) {
+        console.warn(`Voucher with ID ${id} not found for update.`);
+        return null;
+    }
+
     if (!response.ok) {
         throw new Error(`Failed to update voucher with ID ${id}: ${response.statusText}`);
     }
@@ -66,6 +77,11 @@ export async function deleteVoucher(id) {
     const response = await fetch(`${API_BASE_URL}/${id}`, {
         method: "DELETE",
     });
+
+    if (response.status === 404) {
+        console.warn(`Voucher with ID ${id} not found for deletion.`);
+        return { success: false, message: "Voucher not found" };
+    }
 
     if (!response.ok) {
         throw new Error(`Failed to delete voucher with ID ${id}: ${response.statusText}`);

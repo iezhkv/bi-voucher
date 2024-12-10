@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Design1 from "../components/vouchers/Design1/Design1";
+import Design1 from "@/app/components/vouchers/Design1/Design1";
 import { fetchVouchers } from "@/app/actions/voucherActions";
 
 export const dynamic = "force-dynamic";

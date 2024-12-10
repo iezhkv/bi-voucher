@@ -23,6 +23,12 @@
       "name": "Ivan Ejkow",
       "price": "800",
       "wish": "asd"
+    },
+    {
+      "id": "37df",
+      "name": "asd",
+      "price": "123",
+      "wish": "asdsadsa"
     }
   ]
 }

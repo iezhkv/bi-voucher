@@ -1,5 +1,6 @@
 import { Russo_One, Rubik } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/navbar";
 
 const russoOne = Russo_One({
   weight: "400", // or any weight you prefer
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${rubik.className} antialiased`}>
+        <Navbar/>
         {children}
       </body>
     </html>

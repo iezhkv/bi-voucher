@@ -34,6 +34,7 @@ export async function GET(req, { params }) {
       waitUntil: 'networkidle2', // Ensure the page is fully loaded
     });
 
+
     // Hide everything except the two divs we want to render
     await page.evaluate(() => {
       // Hide the body content except for the two divs
@@ -47,6 +48,8 @@ export async function GET(req, { params }) {
         }
       }
     });
+
+    
 
     // Capture the first div with the id 'voucher-front'
     const element1 = await page.$('#voucher-front');

@@ -1,4 +1,5 @@
 import Design1 from "@/app/components/vouchers/Design1/Design1";
+import DownloadButton from "./DownloadButton";
 
 async function getVoucher(id) {
     const res = await fetch(`http://localhost:4000/vouchers/${id}`, {
@@ -14,7 +15,8 @@ async function getVoucher(id) {
 }
 
 export default async function VoucherDetails({ params }) {
-    const voucher = await getVoucher(params.id);
+    const id = await params.id;
+    const voucher = await getVoucher(id);
 
     if (!voucher) {
         return (
@@ -24,14 +26,10 @@ export default async function VoucherDetails({ params }) {
         );
     }
 
-    console.log("Voucher data:", voucher);
-
     return (
         <>
-            <nav>
-                <h2>Voucher Details</h2>
-            </nav>
             <Design1 voucher={voucher} />
+            <DownloadButton id={id} />
         </>
     );
 }

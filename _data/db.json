@@ -17,6 +17,12 @@
       "name": "asd",
       "price": "123",
       "wish": "wish you a merry christmas"
+    },
+    {
+      "id": "d6e7",
+      "name": "Ivan Ejkow",
+      "price": "800",
+      "wish": "asd"
     }
   ]
 }

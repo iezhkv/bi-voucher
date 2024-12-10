@@ -20,8 +20,8 @@ export default function Design1({ voucher = {}, hideBack = false }) {
   const qrValue = "http://localhost:/3000/vouchers/" + id;
 
   // Config
-  const frontImgPath = "/voucherr.png";
-  const backImgPath = "/voucherBack.png";
+  const frontImgPath = "/voucherFront.svg";
+  const backImgPath = "/voucherBack.svg";
 
   // Dynamic font size calculation and console logging
   const { width, ref } = useResizeDetector({

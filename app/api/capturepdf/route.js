@@ -19,14 +19,15 @@ export async function POST(req) {
 
         // Set viewport width and height
         await page.setViewport({
-            width: 2400,
-            height: 2000, // Adjust based on the content
+            width: 2480,
+            height: 3508, // Adjust based on the content
         });
 
         // Navigate to the /Voucher page with dynamic query parameters
         await page.goto(targetUrl, {
             waitUntil: "networkidle2", // Ensure the page is fully loaded
         });
+
 
         // Hide everything except the two divs we want to render
         await page.evaluate(() => {
@@ -42,6 +43,7 @@ export async function POST(req) {
             }
         });
 
+        
         // Capture the first div with the id 'voucher-front'
         const element1 = await page.$("#voucher-front");
         if (!element1) {
@@ -92,8 +94,10 @@ export async function POST(req) {
 
         // Finalize PDF rendering with two separate pages
         const finalPdf = await page.pdf({
-            format: "A4",
-            printBackground: true,
+            width: '2480px',
+            height: '3508px',
+            scale: 1,
+            printBackground: false,
             pageRanges: "1,2",
         });
 

@@ -80,7 +80,7 @@ export default function CreateForm({ onChange }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 w-full">
+        <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-[500px] mx-auto">
             <label className="block">
                 <span className="text-sm font-medium">Name:</span>
                 <input
@@ -119,7 +119,7 @@ export default function CreateForm({ onChange }) {
             </label>
             <button
                 type="submit"
-                className={`${editMode ? "btn-edit" : "btn-primary"}`}
+                className={`${editMode ? "btn-edit" : "btn-primary"} px-4 py-2 rounded bg-blue-600 text-white`}
                 disabled={isLoading}
             >
                 {isLoading ? "Processing..." : editMode ? "Update" : "Create"}

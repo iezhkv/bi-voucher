@@ -1,91 +1,84 @@
 "use server";
 
-const API_BASE_URL = process.env.JSON_SERVER_API || "http://localhost:4000/vouchers";
+import { connectToDB } from "@/app/db";
+import { Voucher } from "@/app/models/Voucher";
+
+// Utility function to transform MongoDB's `_id` to `id`
+const transformVoucher = (voucher) => {
+    const transformed = {
+        id: voucher._id.toString(), // Convert MongoDB ObjectId to string
+        name: voucher.name,
+        price: voucher.price,
+        wish: voucher.wish,
+        createdAt: voucher.createdAt,
+        updatedAt: voucher.updatedAt,
+    };
+    return transformed;
+};
 
 // Get all vouchers
 export async function fetchVouchers() {
-    const response = await fetch(API_BASE_URL, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        cache: "no-store", // Disable caching for fresh data
-    });
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch vouchers: ${response.statusText}`);
+    await connectToDB();
+    try {
+        const vouchers = await Voucher.find({});
+        return vouchers.map(transformVoucher);
+    } catch (error) {
+        throw new Error(`Failed to fetch vouchers: ${error.message}`);
     }
-
-    return response.json();
 }
 
 // Get a voucher by ID
 export async function fetchVoucherById(id) {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-    });
-
-    // Handle 404 Not Found gracefully
-    if (response.status === 404) {
-        console.warn(`Voucher with ID ${id} not found.`);
-        return null;
+    await connectToDB();
+    try {
+        const voucher = await Voucher.findById(id);
+        if (!voucher) {
+            console.warn(`Voucher with ID ${id} not found.`);
+            return null;
+        }
+        return transformVoucher(voucher);
+    } catch (error) {
+        throw new Error(`Failed to fetch voucher with ID ${id}: ${error.message}`);
     }
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch voucher with ID ${id}: ${response.statusText}`);
-    }
-
-    return response.json();
 }
 
 // Create a new voucher
 export async function createVoucher(voucherData) {
-    const response = await fetch(API_BASE_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(voucherData),
-    });
-
-    if (!response.ok) {
-        throw new Error(`Failed to create voucher: ${response.statusText}`);
+    await connectToDB();
+    try {
+        const newVoucher = await Voucher.create(voucherData);
+        return transformVoucher(newVoucher);
+    } catch (error) {
+        throw new Error(`Failed to create voucher: ${error.message}`);
     }
-
-    return response.json();
 }
 
 // Update a voucher by ID
 export async function updateVoucher(id, voucherData) {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(voucherData),
-    });
-
-    if (response.status === 404) {
-        console.warn(`Voucher with ID ${id} not found for update.`);
-        return null;
+    await connectToDB();
+    try {
+        const updatedVoucher = await Voucher.findByIdAndUpdate(id, voucherData, { new: true });
+        if (!updatedVoucher) {
+            console.warn(`Voucher with ID ${id} not found for update.`);
+            return null;
+        }
+        return transformVoucher(updatedVoucher);
+    } catch (error) {
+        throw new Error(`Failed to update voucher with ID ${id}: ${error.message}`);
     }
-
-    if (!response.ok) {
-        throw new Error(`Failed to update voucher with ID ${id}: ${response.statusText}`);
-    }
-
-    return response.json();
 }
 
 // Delete a voucher by ID
 export async function deleteVoucher(id) {
-    const response = await fetch(`${API_BASE_URL}/${id}`, {
-        method: "DELETE",
-    });
-
-    if (response.status === 404) {
-        console.warn(`Voucher with ID ${id} not found for deletion.`);
-        return { success: false, message: "Voucher not found" };
+    await connectToDB();
+    try {
+        const deletedVoucher = await Voucher.findByIdAndDelete(id);
+        if (!deletedVoucher) {
+            console.warn(`Voucher with ID ${id} not found for deletion.`);
+            return { success: false, message: "Voucher not found" };
+        }
+        return { success: true };
+    } catch (error) {
+        throw new Error(`Failed to delete voucher with ID ${id}: ${error.message}`);
     }
-
-    if (!response.ok) {
-        throw new Error(`Failed to delete voucher with ID ${id}: ${response.statusText}`);
-    }
-
-    return { success: true };
 }

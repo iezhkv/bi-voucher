@@ -9,5 +9,4 @@ services:
       - "3000:3000"
     environment:
       - MONGO_URI=mongodb+srv://admin:LuCPI17mM2GMhJVF@mern.1izuh.mongodb.net/?retryWrites=true&w=majority&appName=MERN
-
-
+    restart: unless-stopped  # Automatically restart unless stopped explicitly

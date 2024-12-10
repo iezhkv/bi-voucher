@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createVoucher } from "@/app/actions/voucherActions";
 
@@ -10,6 +10,13 @@ export default function CreateForm({ onChange }) {
     const [price, setPrice] = useState("");
     const [wish, setWish] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    // Pass data to the parent component whenever any form field changes
+    useEffect(() => {
+        if (onChange) {
+            onChange({ name, price, wish });
+        }
+    }, [name, price, wish, onChange]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

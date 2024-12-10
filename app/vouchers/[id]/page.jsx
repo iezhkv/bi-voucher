@@ -1,5 +1,6 @@
 import Design1 from "@/app/components/vouchers/Design1/Design1";
 import DownloadButton from "./DownloadButton";
+import DeleteButton from "./DeleteButton"; // Import the DeleteButton component
 import { fetchVoucherById } from "@/app/actions/voucherActions";
 
 export default async function VoucherDetails({ params }) {
@@ -17,7 +18,10 @@ export default async function VoucherDetails({ params }) {
     return (
         <>
             <Design1 voucher={voucher} />
-            <DownloadButton id={id} />
+            <div className="flex space-x-4 mt-4"> {/* Add spacing between buttons */}
+                <DownloadButton id={id} />
+                <DeleteButton id={id} /> {/* Place the DeleteButton here */}
+            </div>
         </>
     );
 }

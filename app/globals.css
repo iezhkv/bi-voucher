@@ -14,7 +14,7 @@ main {
   @apply max-w-5xl my-12 mx-auto px-8;
 }
 main > h2 {
-  @apply mb-4 pb-2 text-base ;
+  @apply mb-4 pb-2 text-base;
 }
 p > a {
   @apply text-primary underline;
@@ -55,6 +55,15 @@ button:hover {
 }
 .btn-secondary {
   @apply bg-gray-200 text-gray-900;
+}
+.btn-delete {
+  @apply 
+    bg-red-600 
+    text-white 
+    hover:bg-red-500 
+    active:bg-red-700 
+    focus:outline-none focus:ring-2 focus:ring-red-400
+    border border-transparent;
 }
 
 /* form styles */

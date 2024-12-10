@@ -8,7 +8,7 @@
     width: 100%;
     aspect-ratio: 21/9; /* sets the size */
     overflow: hidden;
-    font-size: 3vw;
+    /* font-size: 14px; */
     color: #0D0D34;
   }
   

@@ -1,8 +1,11 @@
+'use client'
+
 import Image from "next/image";
 import styles from "./styles.module.css";
 import { Russo_One } from "next/font/google";
+import { useResizeDetector } from "react-resize-detector";
 
-//  Components
+// Components
 import QRCodeGenerator from "@/app/components/QRCodeGenerator";
 
 const russoOne = Russo_One({
@@ -14,14 +17,30 @@ export default function Design1({ voucher = {}, hideBack = false }) {
   // Destructure data with default values
   const { id, name, price, wish } = voucher;
 
-  const qrValue = "http://localhost:/3001/vouchers/" + id;
+  const qrValue = "http://localhost:/3000/vouchers/" + id;
 
   // Config
   const frontImgPath = "/voucherr.png";
   const backImgPath = "/voucherBack.png";
 
+  // Dynamic font size calculation and console logging
+  const { width, ref } = useResizeDetector({
+    onResize: (width) => {
+      if (width) {
+        console.log("Current width of #voucher-wrapper:", width);
+      }
+    },
+  });
+
+  const fontSize = width ? width / 30 : 16; // Example formula for font size based on width
+
   return (
-    <div className={`${russoOne.className} antialiased wrapper`} id="voucher-wrapper">
+    <div
+      ref={ref}
+      className={`${russoOne.className} antialiased wrapper`}
+      id="voucher-wrapper"
+      style={{ fontSize: `${fontSize}px` }} // Apply dynamic font size
+    >
       {/* Voucher Front */}
       <div className={styles.voucher} id="voucher-front">
         <Image
